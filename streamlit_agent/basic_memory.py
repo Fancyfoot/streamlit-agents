@@ -19,7 +19,7 @@ in the expander below. View the
 msgs = StreamlitChatMessageHistory(key="langchain_messages")
 memory = ConversationBufferMemory(chat_memory=msgs)
 if len(msgs.messages) == 0:
-    msgs.add_ai_message("How can I help you?")
+    msgs.add_ai_message("Bonjour! Je suis LegalGPT, comment puis-je vous aidez ?")
 
 view_messages = st.expander("View the message contents in session state")
 
@@ -33,7 +33,7 @@ if not openai_api_key:
     st.stop()
 
 # Set up the LLMChain, passing in memory
-template = """You are an AI chatbot having a conversation with a human.
+template = """Tu es un assistant juridique qui a une discutin avec un professionels du droit algérien.
 
 {history}
 Human: {human_input}

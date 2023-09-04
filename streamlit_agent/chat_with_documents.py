@@ -77,10 +77,7 @@ class PrintRetrievalHandler(BaseCallbackHandler):
         self.status.update(state="complete")
 
 
-openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
-if not openai_api_key:
-    st.info("Please add your OpenAI API key to continue.")
-    st.stop()
+openai_api_key = "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"
 
 uploaded_files = st.sidebar.file_uploader(
     label="Upload PDF files", type=["pdf"], accept_multiple_files=True
