@@ -11,8 +11,8 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.vectorstores import DocArrayInMemorySearch
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-st.set_page_config(page_title="LangChain: Chat with Documents", page_icon="🦜")
-st.title("🦜 LangChain: Chat with Documents")
+st.set_page_config(page_title="Pdf Talks", page_icon="🦜")
+st.title("🦜 Pdf Talks")
 
 
 @st.cache_resource(ttl="1h")
@@ -61,7 +61,9 @@ class StreamHandler(BaseCallbackHandler):
 
 class PrintRetrievalHandler(BaseCallbackHandler):
     def __init__(self, container):
-        self.status = container.status("**Context Retrieval**")
+        # self.status = container.status("**Context Retrieval**")
+        with st.status("** Context Retrieval**") as status:
+            self.status = status
 
     def on_retriever_start(self, serialized: dict, query: str, **kwargs):
         self.status.write(f"**Question:** {query}")
