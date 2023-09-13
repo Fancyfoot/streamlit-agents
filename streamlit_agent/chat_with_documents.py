@@ -28,7 +28,7 @@ def configure_retriever(uploaded_files):
         docs.extend(loader.load())
 
     # Split documents
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=200)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=20)
     splits = text_splitter.split_documents(docs)
 
     # Create embeddings and store in vectordb
@@ -96,22 +96,20 @@ msgs = StreamlitChatMessageHistory()
 memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=msgs, return_messages=True)
 
 # Setup LLM and QA chain
-llm = ChatOpenAI(
-    model_name="gpt-3.5-turbo", openai_api_key=openai_api_key, temperature=0, streaming=True
-)
+llm = ChatOpenAI(model_name="gpt-4", openai_api_key=openai_api_key, temperature=0, streaming=True)
 qa_chain = ConversationalRetrievalChain.from_llm(
     llm, retriever=retriever, memory=memory, verbose=True
 )
 
-if len(msgs.messages) == 0 or st.sidebar.button("Clear message history"):
+if len(msgs.messages) == 0 or st.sidebar.button("Effacer l'historique des messages"):
     msgs.clear()
-    msgs.add_ai_message("How can I help you?")
+    msgs.add_ai_message("Comment puis-je vous aidez ?")
 
 avatars = {"human": "user", "ai": "assistant"}
 for msg in msgs.messages:
     st.chat_message(avatars[msg.type]).write(msg.content)
 
-if user_query := st.chat_input(placeholder="Ask me anything!"):
+if user_query := st.chat_input(placeholder="Demandez moi !"):
     st.chat_message("user").write(user_query)
 
     with st.chat_message("assistant"):
